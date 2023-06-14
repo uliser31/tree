@@ -11,19 +11,36 @@
 // state: 
 // store :
 
-//pruba
 
-
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './product.models';
+import { Store } from '@ngrx/store';
+import { loadProducts,loadedProducts,  } from './product.actions';
+import { Observable } from 'rxjs';
+import { selectLoading, selectListProduct } from './product.selector';
+import { AppState } from './app.state';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
-  products : Product[];
+export class AppComponent implements OnInit{
+  
+  loading$: Observable<boolean> = new Observable();
+  product$: Observable<Product[]> = new Observable();
+  
+  constructor(private store: Store<AppState>){}
+
+  ngOnInit(): void {
+    this.loading$ = this.store.select(selectLoading);
+    this.product$ = this.store.select(selectListProduct);
+    this.store.dispatch(loadProducts());
+    this.store.dispatch(loadedProducts());
+    console.log(this.loading$)
+    
+  }
+  /*products : Product[];
 
   constructor(){
     this.products = [
@@ -64,5 +81,5 @@ export class AppComponent {
      )]
     )]  
     )]
-  }
-}
+  }*/
+} 

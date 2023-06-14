@@ -7,6 +7,12 @@ import {  Component,
 
 import { Product } from '../product.models';
 
+import { Store } from '@ngrx/store';
+//import { initProduct,initializedProduct } from '../product.actions';
+import { Observable } from 'rxjs';
+import { selectListProduct, selectLoading } from '../product.selector';
+import { AppState } from '../app.state';
+
 //import { selectProduct, initProduct } from '../product.actions';
 
 @Component({
@@ -22,9 +28,11 @@ export class BranchComponent{
 
   expand : boolean = true;
   
+  loading$: Observable<boolean> = new Observable()
+  product$: Observable<Product> = new Observable()
   //currentProduct!: Product;
   
-  constructor(){
+  constructor(private store: Store<AppState>){
     this.onProductSelected = new EventEmitter;
   }
 
@@ -71,6 +79,13 @@ export class BranchComponent{
     console.log("The product was clicked",product);
     this.onProductSelected.emit(product);
     return true;
-}   
+  }   
+  ngOnInit():void {
+    this.loading$ = this.store.select(selectLoading)
+  //  this.store.dispatch(initProduct())
+  //  this.store.dispatch(initializedProduct())
+    //this.product$ = this.store.select(selectListProduct)
+  }
+
   
 }

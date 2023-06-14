@@ -1,7 +1,14 @@
 <ul>
-
+<!--
 <branch
     *ngFor = "let myProduct of products"
     [product]= "myProduct">
 </branch>
+-->
+<b *ngIf="!loading$">Cargando ...</b>
+<b *ngIf="loading$">Datos Cargados</b>
+<tree
+  *ngFor = "let myProduct of product$ | async"
+  [product]= "myProduct">
+</tree>    
 </ul>

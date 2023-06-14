@@ -1,0 +1,40 @@
+<div class="offset-1 fluid align-text-top">
+    
+    <!--  <div class="offset-2 col-sm-12 col-md-6 col-lg-4 col-xl-3 col-xxl-2 border-start fluid"></div>
+    -->
+    <div>
+        <span appHover class= "border-start"> 
+         
+         <i class="bi bi-folder" *ngIf="hasChield()"></i>
+         
+         <expand 
+             (click) = "expandClick()"
+             *ngIf="hasChield() && expanded()">
+         </expand>
+         
+         <contract 
+             (click) = "contractClick()"
+             *ngIf="hasChield()&&!expanded()">
+         </contract>
+         
+        <span
+            (click)="clicked(product)" 
+            [class.selected]="isSelected(product)"
+            [ngClass]="{'selected': isSelected(product)}"
+            [ngStyle]="{'background-color':(isSelected$|async)?'#ff0':'white'}"
+            >{{product.name}}
+        </span> 
+       
+         </span>
+    </div>
+
+   <div *ngIf="hasChield() && expanded()" >
+      <tree 
+      *ngFor = "let myProduct of product.children"
+      [product]="myProduct">
+       </tree>
+   </div>
+   
+
+ </div> 
+

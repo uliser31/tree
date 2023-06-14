@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -8,9 +8,15 @@ import { ExpandComponent } from './expand/expand.component';
 import { ContractComponent } from './contract/contract.component';
 import { SheetComponent } from './sheet/sheet.component';
 
+//import { StoreModule } from '@ngrx/store';
+
 //import { StoreDevtools, StoreDevtoolsModule } from '@ngrx/store-devtools';
 //import { productReducer } from './product.reducer';
-import { Product } from './product.models';
+
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ROOT_REDUCER } from './app.state';
+import { TreeComponent } from './tree/tree.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -18,11 +24,13 @@ import { Product } from './product.models';
     HoverDirective,
     ExpandComponent,
     ContractComponent,
-    SheetComponent
+    SheetComponent,
+    TreeComponent
   ],
   imports: [
-    BrowserModule
-    
+    BrowserModule,
+    StoreModule.forRoot(ROOT_REDUCER, {}),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),    
   ],
   providers: [],
   bootstrap: [AppComponent]
